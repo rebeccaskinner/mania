@@ -11,6 +11,14 @@
 
 static game_config_t config;
 
+static void set_default_options() __attribute__((constructor));
+
+void set_default_options()
+{
+    config.screen_width  = 1024;
+    config.screen_height = 768;
+}
+
 int main(int argc, char** argv)
 {
     args_init(&config);
@@ -20,15 +28,16 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    return 0;
-
     SDL_Surface* bg = NULL;
     SDL_Surface* screen = NULL;
 
 
     SDL_Init(SDL_INIT_EVERYTHING);
 
-    // screen = SDL_SetVideoMode(1024, 768, 32, SDL_SWSURFACE);
+    screen = SDL_SetVideoMode(config.screen_width,
+                              config.screen_height,
+                              32,
+                              SDL_SWSURFACE);
 
     bg = IMG_Load("resources/background.png");
     SDL_BlitSurface(bg,NULL,screen,NULL);
