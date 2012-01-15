@@ -7,7 +7,8 @@ CFLAGS= -std=gnu99 \
 	-Wno-return-type \
 	-Wno-unused-function
 
-LFLAGS= -lSDL
+LFLAGS= -lSDL \
+	-lSDL_image
 
 SRC= $(shell echo *.c)
 OBJ= $(SRC:.c=.o)

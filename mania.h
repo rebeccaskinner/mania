@@ -1,5 +1,6 @@
 #ifndef __MANIA_H__
 #define __MANIA_H__
+#include <stdint.h>
 
 #define EXPECT(x,y) (__builtin_expect((x),(y)))
 #define LIKELY(x)   (EXPECT((x),1))
@@ -8,7 +9,8 @@
 
 struct game_config
 {
-    int run_game;
+    uint16_t screen_height;
+    uint16_t screen_width;
 };
 
 typedef struct game_config game_config_t;
