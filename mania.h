@@ -15,8 +15,4 @@ typedef struct game_config game_config_t;
 typedef unsigned char byte;
 typedef int (*flag_fun)(game_config_t* config, const char* val);
 
-const char* const flag_help_long = "--help";
-const char* const flag_help_short = "-h";
-
-
 #endif
