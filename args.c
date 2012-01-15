@@ -128,7 +128,20 @@ cleanup:
     return r;
 }
 
-int parse_flags(int argc, char** argv)
+static void insert_args()
+{
+    struct arg_cmd* arg;
+    for(linked_list_t* opt = options_list; opt; opt = opt->next)
+    {
+        if(!(arg = opt->data)) continue;
+        for(linked_list_t* flag = arg->options; flag; flag = flag->next)
+        {
+            hash_insert(&args_table,flag->data,arg->f);
+        }
+    }
+}
+
+static int parse_flags(int argc, char** argv)
 {
     int rv = 0;
     for(char* arg; (arg = *argv); argv++)
@@ -143,20 +156,7 @@ int parse_flags(int argc, char** argv)
     return rv;
 }
 
-static void insert_args()
-{
-    struct arg_cmd* arg;
-    for(linked_list_t* opt = options_list; opt; opt = opt->next)
-    {
-        if(!(arg = opt->data)) continue;
-        for(linked_list_t* flag = arg->options; flag; flag = flag->next)
-        {
-            hash_insert(&args_table,flag->data,arg->f);
-        }
-    }
-}
-
-void args_init(game_config_t* c)
+static void args_init(game_config_t* c)
 {
     config = c;
     memset(&args_table,0,sizeof(struct hsearch_data));
@@ -166,4 +166,10 @@ void args_init(game_config_t* c)
     add_arg(set_height,"set the game window height","-h","--height",0);
     add_arg(set_dimensions,"set the game window size (WxH)","-s","--size",0);
     insert_args();
+}
+
+int game_config_setup(game_config_t* c, int argc, char** argv)
+{
+    args_init(c);
+    return parse_flags(argc, argv);
 }

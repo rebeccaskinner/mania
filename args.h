@@ -3,7 +3,6 @@
 #include <search.h>
 #include "mania.h"
 
-int parse_flags(int argc, char** argv);
-void args_init(game_config_t* c);
+int game_config_setup(game_config_t* c, int argc, char** argv);
 
 #endif

@@ -21,8 +21,7 @@ void set_default_options()
 
 int main(int argc, char** argv)
 {
-    args_init(&config);
-    if(parse_flags(argc, argv))
+    if(game_config_setup(&config,argc, argv))
     {
         printf("Error processing arguments\n");
         return 1;
