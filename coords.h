@@ -37,5 +37,4 @@ struct quadtree
     quadtree_t* quadrants[4];
 };
 
-
 #endif

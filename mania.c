@@ -11,21 +11,15 @@
 #include "args.h"
 #include "hash_utils.h"
 #include "SDL_utils.h"
+#include "entity.h"
+#include "invader.h"
 #include "utils.h"
 
 #include "mania.h"
 
-// static game_config_t config;
 static game_state_t  gamestate;
 
 static void init() __attribute__((constructor));
-
-// static void game_config_init()
-// {
-//     memset(&config,0,sizeof(game_config_t));
-//     config.screen_width  = 1024;
-//     config.screen_height = 768;
-// }
 
 static void init()
 {
@@ -38,11 +32,17 @@ static void gameloop(SDL_Surface* screen)
     SDL_Event event;
     bool quit = 0;
 
+    invader_t* invader = invader_new();
+
     while(SDL_PollEvent(&event) || !quit)
     {
         if(event.type == SDL_QUIT) quit=1;
 
         SDL_BlitSurface(bg,NULL,screen,NULL);
+
+        invader_update(invader,&gamestate);
+        invader_draw(invader,&gamestate,screen);
+
         SDL_Flip(screen);
         usleep(500);
     }
