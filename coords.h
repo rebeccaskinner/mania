@@ -22,6 +22,8 @@ struct vector
     float magnitude; // store the magnitude in pixels
 };
 
+point_t vector_to_offset(vector_t* v);
+
 /*
  * Partition space into quadrants
  *
