@@ -7,6 +7,7 @@
 #include "args.h"
 #include "hash_utils.h"
 #include "list.h"
+#include "utils.h"
 #include "mania.h"
 
 struct arg_cmd
@@ -33,7 +34,7 @@ inline static struct arg_cmd* vcreate_option(const flag_fun f,
                                              const char* help_text,
                                              va_list al)
 {
-    struct arg_cmd* cmd = malloc(sizeof(struct arg_cmd));
+    struct arg_cmd* cmd = malloc0(sizeof(struct arg_cmd));
     char* flag;
     cmd->f = f;
     cmd->help_text = strdup(help_text);

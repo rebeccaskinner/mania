@@ -3,11 +3,6 @@
 #include <stdint.h>
 #include "list.h"
 
-#define EXPECT(x,y) (__builtin_expect((x),(y)))
-#define LIKELY(x)   (EXPECT((x),1))
-#define UNLIKELY(x) (EXPECT((x),0))
-#define UNUSED __attribute__((unused))
-
 struct game_config
 {
     uint16_t screen_height;
@@ -16,6 +11,7 @@ struct game_config
 
 struct game_state
 {
+    struct game_config config;
     int paused;
     linked_list_t* entities;
 };

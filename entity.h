@@ -6,17 +6,15 @@
 #include "coords.h"
 #include "mania.h"
 
-struct entity;
-struct invader;
-
 typedef struct entity entity_t;
 
-typedef void (*entity_draw_f)  (game_state_t*,SDL_Surface*);
-typedef void (*entity_update_f)(game_state_t*,entity_t*);
+typedef void (*entity_draw_f)  (entity_t*,game_state_t*,SDL_Surface*);
+typedef void (*entity_update_f)(entity_t*,game_state_t*);
 
 struct entity
 {
-    point_t         position;
+    SDL_Rect        offset;
+    int             visible;
     SDL_Surface*    sprite;
     entity_draw_f   draw_f;
     entity_update_f update_f;

@@ -2,6 +2,7 @@ CC=gcc
 
 CFLAGS= -std=gnu99 \
 	-O0        \
+	-g -ggdb   \
 	-Wall      \
 	-Werror    \
 	-Wno-return-type \

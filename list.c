@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "list.h"
-#include "mania.h"
+#include "utils.h"
 
 // returns tail element of list, or NULL if no list given
 linked_list_t* list_get_tail(linked_list_t* list)
@@ -70,4 +70,42 @@ linked_list_t* list_elem_rm(linked_list_t* elem)
     if(elem->prev) elem->prev->next = elem->next;
     if(elem->next) elem->next->prev = elem->prev;
     return elem;
+}
+
+void list_map(linked_list_t* list, list_elem_fun f)
+{
+    for(;list;list=list->next)
+        list->data = f(list->data);
+}
+
+void* list_foldr(linked_list_t* list, list_fold_fun f, void* init_val)
+{
+    for(;list;list=list->next)
+        init_val = f(list->data, init_val);
+    return init_val;
+}
+
+void list_free_data(linked_list_t* list)
+{
+    for(;list;list=list->next)
+    {
+        if(LIKELY(NULL != list->data)) free(list->data);
+    }
+}
+
+void list_free_all(linked_list_t* list)
+{
+    while(list)
+    {
+        linked_list_t* tmp = list;
+        if(LIKELY(NULL != tmp->data)) free(tmp->data);
+        list = list->next;
+        free(tmp);
+    }
+}
+
+void list_destruct(linked_list_t* list, list_elem_fun f)
+{
+    list_map(list,f);
+    list_free_all(list);
 }
