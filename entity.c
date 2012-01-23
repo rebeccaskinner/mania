@@ -18,14 +18,34 @@ static void entity_draw_def(entity_t* ent, game_state_t* st, SDL_Surface* surf)
     return;
 }
 
+static void entity_destruct_def(entity_t* ent, game_state_t* st)
+{
+    if(UNLIKELY(NULL == ent)) return;
+
+    ent->visible = 0;
+
+    if(ent->sprite)
+        SDL_FreeSurface(ent->sprite);
+
+    if(ent->data_destruct_f)
+        ent->data_destruct_f(ent->entity_data, st);
+
+    free(ent);
+}
+
 static void entity_update_def(entity_t* ent, game_state_t* st)
 {
     return;
 }
 
-void entity_init(entity_t* ent)
+void entity_free(entity_t* ent, game_state_t* st)
 {
-    ent->draw_f = entity_draw_def;
-    ent->update_f = entity_update_def;
+    ent->visible = 0;
 }
 
+void entity_init(entity_t* ent)
+{
+    ent->draw_f     = entity_draw_def;
+    ent->update_f   = entity_update_def;
+    ent->destruct_f = entity_destruct_def;
+}

@@ -16,17 +16,22 @@
 
 typedef struct entity entity_t;
 
-typedef void (*entity_draw_f)  (entity_t*,game_state_t*,SDL_Surface*);
-typedef void (*entity_update_f)(entity_t*,game_state_t*);
+typedef void (*entity_draw_f)          (entity_t*,game_state_t*,SDL_Surface*);
+typedef void (*entity_action_f)        (entity_t*,game_state_t*);
 
 struct entity
 {
-    SDL_Rect        offset;
-    int             visible;
-    SDL_Surface*    sprite;
-    entity_draw_f   draw_f;
-    entity_update_f update_f;
+    SDL_Rect         offset;
+    SDL_Surface*     sprite;
+
+    int              visible;
+
+    entity_draw_f    draw_f;
+    entity_action_f  update_f;
+    entity_action_f  destruct_f;
+
     void*           entity_data;
+    entity_action_f data_destruct_f;
 };
 
 void entity_init(entity_t* ent);

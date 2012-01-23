@@ -14,6 +14,7 @@ struct game_state
     struct game_config config;
     int paused;
     linked_list_t* entities;
+    linked_list_t* freelist;
 };
 
 typedef struct game_config game_config_t;
